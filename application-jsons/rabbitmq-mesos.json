@@ -1,0 +1,41 @@
+{
+  "id": "/rabbitmq",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 128,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "rabbitmq:3.6.8",
+      "name": "rabbitmq",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 5672
+        }
+      ],
+      "parameters": []
+    },
+    "volumes": []
+  },
+  "uris": [
+    "file:///etc/mesos/docker.tar.gz"
+  ],
+  "env": {},
+  "labels": {},
+  "healthChecks": [
+    {
+      "protocol": "COMMAND",
+      "command": {
+        "value": "rabbitmqctl status"
+      },
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ]
+}
