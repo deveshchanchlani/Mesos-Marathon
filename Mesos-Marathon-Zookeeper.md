@@ -96,6 +96,12 @@ sudo service zookeeper start
 sudo service mesos-slave start
 ```
 
+## To deploy an application
+
+```
+curl -X POST http://<mesos-master-ip>:8080/v2/apps -d @<application-deployment.json filename> -H "Content-type: application/json"
+```
+
 ## FAQs
 
 #### 1. On Mesos-UI (browser), to view Agent sandbox, add Agent hostname and IP to /etc/hosts of the viewing machine.
