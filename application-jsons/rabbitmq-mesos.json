@@ -2,7 +2,7 @@
   "id": "/rabbitmq",
   "cmd": null,
   "cpus": 0.2,
-  "mem": 128,
+  "mem": 80,
   "disk": 0,
   "instances": 1,
   "container": {

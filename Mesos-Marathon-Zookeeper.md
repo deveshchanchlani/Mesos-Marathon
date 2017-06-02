@@ -23,7 +23,7 @@ EOF
 
 ## Configure Mesos Master
 
-##### For multiple master, put it as
+##### For multiple masters, put it as
 ##### zk://host1:2181,host2:2181,host3:2181/mesos
 
 ```

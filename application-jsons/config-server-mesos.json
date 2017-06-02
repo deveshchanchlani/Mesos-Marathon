@@ -1,0 +1,44 @@
+{
+  "id": "config-server",
+  "cmd": null,
+  "cpus": 0.2,
+  "mem": 80,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "deveshtest/config-server:1.0",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8888,
+          "protocol": "tcp",
+          "name": "config-server",
+          "labels": null
+        }
+      ],
+      "parameters": []
+    },
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/config-repo",
+        "hostPath": "/root/Mesos-Marathon/config-repo",
+        "mode": "RO"
+      }
+    ]
+  },
+  "env": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/info",
+      "port": 8888,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {}
+}
