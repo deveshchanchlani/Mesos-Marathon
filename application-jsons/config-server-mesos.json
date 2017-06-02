@@ -28,12 +28,14 @@
       }
     ]
   },
+  "uris": [
+    "file:///etc/mesos/docker.tar.gz"
+  ],
   "env": {},
   "healthChecks": [
     {
       "protocol": "HTTP",
       "path": "/info",
-      "port": 8888,
       "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
