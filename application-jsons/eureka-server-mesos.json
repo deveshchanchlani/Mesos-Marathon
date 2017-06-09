@@ -1,0 +1,39 @@
+{
+  "id": "eureka-server",
+  "cmd": null,
+  "cpus": 0.2,
+  "mem": 80,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "deveshtest/eureka-server:1.0",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8761,
+          "protocol": "tcp",
+          "name": "eureka-server",
+          "labels": null
+        }
+      ],
+      "parameters": []
+    },
+    "type": "DOCKER"
+  },
+  "uris": [
+    "file:///etc/mesos/docker.tar.gz"
+  ],
+  "env": {},
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/info",
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "labels": {}
+}

@@ -33,19 +33,22 @@ sudo apt-get -y update
 sudo apt-get install -y mesos
 
 # Configure Zookeeper
-cat <<EOF >> /etc/zookeeper/conf/zoo.cfg
-server.1=$1:2888:3888
-EOF
+# cat <<EOF >> /etc/zookeeper/conf/zoo.cfg
+# server.1=$1:2888:3888
+# EOF
 
-cat <<EOF > /etc/mesos/zk
-zk://$1:2181/mesos
-EOF
+# cat <<EOF > /etc/mesos/zk
+# zk://$1:2181/mesos
+# EOF
+echo manual | sudo tee /etc/init/zookeeper.override
 
 # Configure Mesos Slave
 echo $2 | sudo tee /etc/mesos-slave/ip
 sudo cp /etc/mesos-slave/ip /etc/mesos-slave/hostname
 
 echo 'docker,mesos' > /etc/mesos-slave/containerizers
+
+echo manual | sudo tee /etc/init/mesos-master.override
 
 # Configure Docker
 echo 'Enter Docker Registry password - '

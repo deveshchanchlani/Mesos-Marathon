@@ -9,7 +9,7 @@ apt update
 apt-get -y install mesos marathon  
 ```
 
-## Configure Zookeeper
+## Configure Zookeeper (only for mesos-master)
 
 ```
 cat <<EOF >> etc/zookeeper/conf/myid
@@ -82,6 +82,7 @@ cp docker.tar.gz /etc/mesos/
 ## Bring up Mesos-Master
 
 ```
+echo manual | sudo tee /etc/init/mesos-slave.override
 sudo service zookeeper start
 #nohup sudo mesos-master --ip=<mesos-master-ip> --work_dir=/var/lib/mesos --hostname=<mesos-master-ip> >mesos-master.log 2>&1 &
 sudo service mesos-master start
@@ -91,6 +92,8 @@ sudo service marathon start
 ## Bring up Mesos-Slave
 
 ```
+echo manual | sudo tee /etc/init/mesos-master.override
+echo manual | sudo tee /etc/init/zookeeper.override
 sudo service zookeeper start
 #nohup sudo mesos-slave --master=<mesos-master-ip>:5050 --log_dir=/var/log/mesos --work_dir=/var/lib/mesos --containerizers=mesos,docker --resources="ports(*):[8000-9000,31000-32000]" --ip=<mesos-slave-ip> >mesos-slave.log 2>&1 &
 sudo service mesos-slave start
@@ -122,3 +125,9 @@ sudo update-grub && sudo reboot
 ##### To enable swap on DigitalOcean, refer - https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
 
 #### 3. To check logs => /var/lib/mesos/meta/slave
+
+#### 4. To setup a Mesos Cluster on Docker containers
+
+<https://medium.com/@gargar454/deploy-a-mesos-cluster-with-7-commands-using-docker-57951e020586>
+
+For multi-host Cluster setup - <https://github.com/sekka1/mesosphere-docker#multi-node-setup>

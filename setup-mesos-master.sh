@@ -54,4 +54,5 @@ cp /etc/marathon/conf/master /etc/marathon/conf/zk
 sed -i 's/mesos/marathon/g' /etc/marathon/conf/zk
 
 #Start Services
+echo manual | sudo tee /etc/init/mesos-slave.override
 sh ./mesos-master-handler.sh start
