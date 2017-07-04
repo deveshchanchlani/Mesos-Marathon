@@ -22,7 +22,7 @@ apt-cache policy docker-engine
 sudo apt-get install -y docker-engine
 sudo usermod -aG docker $(whoami)
 
-# Install Mesos & Marathon
+# Install Mesos
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
 DISTRO=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
 CODENAME=$(lsb_release -cs)
@@ -33,13 +33,14 @@ sudo apt-get -y update
 sudo apt-get install -y mesos
 
 # Configure Zookeeper
+
 # cat <<EOF >> /etc/zookeeper/conf/zoo.cfg
 # server.1=$1:2888:3888
 # EOF
 
-# cat <<EOF > /etc/mesos/zk
-# zk://$1:2181/mesos
-# EOF
+cat <<EOF > /etc/mesos/zk
+zk://$1:2181/mesos
+EOF
 echo manual | sudo tee /etc/init/zookeeper.override
 
 # Configure Mesos Slave
@@ -50,9 +51,11 @@ echo 'docker,mesos' > /etc/mesos-slave/containerizers
 
 echo manual | sudo tee /etc/init/mesos-master.override
 
+echo "cgroups/cpu,cgroups/mem" | sudo tee /etc/mesos-slave/isolation
+
 # Configure Docker
 echo 'Enter Docker Registry password - '
-docker login hub.docker.com --username=deveshdocker
+docker login hub.docker.com --username=deveshdocker --password=hakerz08
 cd ~
 tar czf docker.tar.gz .docker
 cp docker.tar.gz /etc/mesos/
@@ -67,5 +70,7 @@ echo 'vm.swappiness=10' >> /etc/sysctl.conf
 echo 'vm.vfs_cache_pressure=50' >> /etc/sysctl.conf
 
 # Start Services
-sudo service zookeeper start
+#sudo service zookeeper start
 sudo service mesos-slave start
+
+git clone https://github.com/deveshchanchlani/Mesos-Marathon.git
