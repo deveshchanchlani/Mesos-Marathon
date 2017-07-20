@@ -131,3 +131,8 @@ sudo update-grub && sudo reboot
 <https://medium.com/@gargar454/deploy-a-mesos-cluster-with-7-commands-using-docker-57951e020586>
 
 For multi-host Cluster setup - <https://github.com/sekka1/mesosphere-docker#multi-node-setup>
+
+#### 4. After Mesos-DNS setup, to check nodes having a service installed
+```
+nslookup <service-name>.<framework>.<domain>
+```
